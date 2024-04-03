@@ -162,3 +162,4 @@ cython_debug/
 model/llama-2-7b-chat.ggmlv3.q8_0.bin
 model/pytorch_model.bin
 model/gemma-7b.gguf
+model/llama-2-7b-chat.ggmlv3.q4_0.bin
