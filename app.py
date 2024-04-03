@@ -1,34 +1,32 @@
 from flask import Flask, render_template, jsonify, request
 from src.helper import download_hugging_face_embeddings
-from langchain.vectorstores import Pinecone
 import pinecone
+from langchain.vectorstores import Pinecone
 from langchain.prompts import PromptTemplate
 from langchain.llms import CTransformers
+from langchain_pinecone import PineconeVectorStore
 from langchain.chains import RetrievalQA
 from dotenv import load_dotenv
 from src.prompt import *
 import os
 
+
 app = Flask(__name__)
 
-load_dotenv()
+PINECONE_API_KEY = "6970c088-24a7-44a7-a6c0-648146ecc094"
+PINECONE_API_ENV = "gcp-starter"
+INDEX_NAME="medical-chatbot"
 
-PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY')
-PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV')
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+os.environ["PINECONE_INDEX_NAME"] = INDEX_NAME
 
 
 embeddings = download_hugging_face_embeddings()
 
-#Initializing the Pinecone
-pinecone.init(api_key=PINECONE_API_KEY,
-              environment=PINECONE_API_ENV)
-
-index_name="medical-bot"
-
 #Loading the index
-docsearch=Pinecone.from_existing_index(index_name, embeddings)
+docsearch=PineconeVectorStore.from_existing_index(INDEX_NAME, embeddings)
 
-
+ 
 PROMPT=PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
 chain_type_kwargs={"prompt": PROMPT}

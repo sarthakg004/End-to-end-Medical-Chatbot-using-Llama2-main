@@ -9,3 +9,5 @@ setup(
     install_requires = []
 
 )
+
+## setup.py file get executed automatically while install requirement.txt file because we have added -e . as a requirement

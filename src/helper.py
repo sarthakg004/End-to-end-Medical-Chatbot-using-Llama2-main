@@ -1,3 +1,5 @@
+# this file contain methods for preprocessing data form loading data from pdf to cratign text chunks and embeddings
+
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
